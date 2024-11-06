@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.1.1 (Python 3.12.2 on win32)" generated="2024-11-06T10:19:18.812328" rpa="false" schemaversion="5">
+<suite id="s1" name="Robot First Test" source="C:\Users\biela\Desktop\Robot_Framework\Robot_test\robot_first_test.robot">
+<test id="s1-t1" name="Starting a browser with a page" line="5">
+<kw name="New Browser" owner="Browser">
+<msg time="2024-11-06T10:19:19.085427" level="INFO">{"browser": "chromium", "headless": false, "chromiumSandbox": false, "devtools": false, "handleSIGHUP": true, "handleSIGINT": true, "handleSIGTERM": true, "slowMo": 0.0, "timeout": 30000.0, "tracesDir": "C:\\Users\\biela\\Desktop\\Robot_Framework\\browser\\traces\\f6d7fcb5-e81a-4fd7-ba42-28e933203f6d"}</msg>
+<msg time="2024-11-06T10:19:19.148511" level="INFO">Starting Browser process C:\Users\biela\Desktop\Robot_test\Robot_test\.venv\Robot_Framework\Lib\site-packages\Browser\wrapper\index.js using port 60732</msg>
+<msg time="2024-11-06T10:19:19.148511" level="INFO">Node startup parameters: ['node', 'C:\\Users\\biela\\Desktop\\Robot_test\\Robot_test\\.venv\\Robot_Framework\\Lib\\site-packages\\Browser\\wrapper\\index.js', '60732']</msg>
+<msg time="2024-11-06T10:19:21.131902" level="INFO">Successfully created browser with options: {"browser":"chromium","headless":false,"chromiumSandbox":false,"devtools":false,"handleSIGHUP":true,"handleSIGINT":true,"handleSIGTERM":true,"slowMo":0,"timeout":30000,"tracesDir":"C:\\Users\\biela\\Desktop\\Robot_Framework\\browser\\traces\\f6d7fcb5-e81a-4fd7-ba42-28e933203f6d"}</msg>
+<arg>chromium</arg>
+<arg>headless=false</arg>
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Create a new playwright Browser with specified options.</doc>
+<status status="PASS" start="2024-11-06T10:19:19.084156" elapsed="2.047746"/>
+</kw>
+<kw name="New Page" owner="Browser">
+<msg time="2024-11-06T10:19:23.454373" level="INFO">Successfully initialized new page object and opened url: https://marketsquare.github.io/robotframework-browser/Browser.html</msg>
+<msg time="2024-11-06T10:19:23.454373" level="INFO">No context was open. New context was automatically opened when this page is created.</msg>
+<arg>https://marketsquare.github.io/robotframework-browser/Browser.html</arg>
+<tag>BrowserControl</tag>
+<tag>Setter</tag>
+<doc>Open a new Page.</doc>
+<status status="PASS" start="2024-11-06T10:19:21.132901" elapsed="2.321472"/>
+</kw>
+<kw name="Get Title" owner="Browser">
+<msg time="2024-11-06T10:19:23.469335" level="INFO">Title: 'Browser'</msg>
+<arg>==</arg>
+<arg>Browser</arg>
+<tag>Assertion</tag>
+<tag>Getter</tag>
+<tag>PageContent</tag>
+<doc>Returns the title of the current page.</doc>
+<status status="PASS" start="2024-11-06T10:19:23.455371" elapsed="0.013964"/>
+</kw>
+<status status="PASS" start="2024-11-06T10:19:19.082533" elapsed="4.387798"/>
+</test>
+<status status="PASS" start="2024-11-06T10:19:18.813327" elapsed="4.773694"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" skip="0" id="s1" name="Robot First Test">Robot First Test</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

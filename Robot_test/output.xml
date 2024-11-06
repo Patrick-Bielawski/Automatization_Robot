@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.1.1 (Python 3.12.2 on win32)" generated="2024-11-06T10:12:20.120771" rpa="false" schemaversion="5">
+<suite id="s1" name="Robot First Test" source="C:\Users\biela\Desktop\Robot_Framework\Robot_test\robot_first_test.robot">
+<test id="s1-t1" name="Starting a browser with a page" line="5">
+<kw name="New Browser">
+<msg time="2024-11-06T10:12:20.144362" level="FAIL">No keyword with name 'New Browser' found.</msg>
+<arg>chromium</arg>
+<arg>headless=false</arg>
+<status status="FAIL" start="2024-11-06T10:12:20.144362" elapsed="0.000000">No keyword with name 'New Browser' found.</status>
+</kw>
+<kw name="New Page">
+<arg>https://marketsquare.github.io/robotframework-browser/Browser.html</arg>
+<status status="NOT RUN" start="2024-11-06T10:12:20.144362" elapsed="0.000000"/>
+</kw>
+<kw name="Get Title">
+<arg>==</arg>
+<arg>Browser</arg>
+<status status="NOT RUN" start="2024-11-06T10:12:20.144362" elapsed="0.000000"/>
+</kw>
+<status status="FAIL" start="2024-11-06T10:12:20.142364" elapsed="0.001998">No keyword with name 'New Browser' found.</status>
+</test>
+<status status="FAIL" start="2024-11-06T10:12:20.122765" elapsed="0.022594"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="1" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="0" fail="1" skip="0" id="s1" name="Robot First Test">Robot First Test</stat>
+</suite>
+</statistics>
+<errors>
+<msg time="2024-11-06T10:12:20.141715" level="ERROR">Error in file 'C:\Users\biela\Desktop\Robot_Framework\Robot_test\robot_first_test.robot' on line 2: Importing library 'Browser' failed: ModuleNotFoundError: No module named 'Browser'
+Traceback (most recent call last):
+  None
+PYTHONPATH:
+  C:\Users\biela\AppData\Local\Programs\Python\Python312\Scripts\robot.exe
+  C:\Users\biela\AppData\Local\Programs\Python\Python312\python312.zip
+  C:\Users\biela\AppData\Local\Programs\Python\Python312\DLLs
+  C:\Users\biela\AppData\Local\Programs\Python\Python312\Lib
+  C:\Users\biela\AppData\Local\Programs\Python\Python312
+  C:\Users\biela\AppData\Local\Programs\Python\Python312\Lib\site-packages</msg>
+</errors>
+</robot>
