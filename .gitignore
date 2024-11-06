@@ -1,0 +1,6 @@
+# Ignorování logů a výstupních souborů Robot Frameworku
+log.html
+output.xml
+playwright-log.txt
+report.html
+log/
