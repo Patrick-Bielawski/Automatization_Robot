@@ -5,3 +5,6 @@ playwright-log.txt
 report.html
 log/
 .idea/
+*.log
+*.html
+*.xml
