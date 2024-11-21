@@ -1,36 +1,72 @@
 *** Settings ***
 Library    Process
 Library    OperatingSystem
+
+*** Variables ***
+
+# Hodnoty pro spuštění kalkulačky
+${CALCULATOR_PROCESS}       calc.exe
+${TASKLIST}                 tasklist
+${PROCESS_LIST_FILE}        process_list.txt
+${ENCODING}                 cp850
+${CALCULATOR_NAME}          CalculatorApp.exe
+
+# Hodnoty pro sčítání
+${ADD_TEST_1}               100 + 0
+${ADD_RESULT_1}             100
+${ADD_TEST_2}               10 + 8
+${ADD_RESULT_2}             18
+${ADD_TEST_3}               2.3 + 0.9
+${ADD_RESULT_3}             3.2
+
+# Nesprávné výsledky
+${WRONG_RESULT_1}           5
+${WRONG_RESULT_2}           0
+${WRONG_RESULT_3}           2.9
+
 *** Test Cases ***
-# Testování kalkulačky v PC
 
-Test_start_calc
+Test Start Calculator
+    [Documentation]     Tento test zkontroluje, zde je kalkulačka spuštěná.
+    Start Calculator
+    Verify Calculator Run
 
-    [Documentation]    Tento test zkontroluje, zda je proces kalkulačky spuštěn
-    Run Process    calc.exe
-    Run Process    tasklist    stdout=process_list.txt
-    ${output} =    Get File    process_list.txt    encoding=cp850
-    Should Contain    ${output}    CalculatorApp.exe
+Test Add Function
+    [Documentation]     Tento test zkontroluje funkci sčítání
+    Verify Addition Result          ${ADD_TEST_1}   ${ADD_RESULT_1}
+    Verify Addition Result          ${ADD_TEST_2}   ${ADD_RESULT_2}
+    Verify Addition Result          ${ADD_TEST_3}   ${ADD_RESULT_3}
 
-Test_add_function
+Test Add Wrong Function
+    [Documentation]     Tento test zkontroluje, že výsledek není roven "result"
+    Test Add Wrong Function          ${ADD_TEST_1}   ${WRONG_RESULT_1}
+    Test Add Wrong Function          ${ADD_TEST_2}   ${WRONG_RESULT_2}
+    Test Add Wrong Function          ${ADD_TEST_3}   ${WRONG_RESULT_3}
 
-    [Documentation]     Tento test zkontroluje funkci sčítání.
-    ${result} =     Evaluate    5 + 0
-    Should Be Equal As Integers    ${result}    5
-    ${result} =     Evaluate    5 + 1
-    Should Be Equal As Integers    ${result}    6
-    ${result} =     Evaluate    5 + 6
-    Should Be Equal As Integers    ${result}    11
+*** Keywords ***
 
-Test_add_wrong_function
+Start Calculator
+    Run Process       ${CALCULATOR_PROCESS}
 
-    [Documentation]     Tento test zkontroluje, že výsledek není roven "result".
-    ${result} =     Evaluate    3 + 4
-    Should Not Be Equal As Integers   ${result}    2
-    ${result} =     Evaluate    3 + 4
-    Should Not Be Equal As Integers    ${result}    8
-    ${result} =     Evaluate    3 + 4
-    Should Not Be Equal As Integers    ${result}    1
+Verify Calculator Run
+    Run Process       ${TASKLIST}      stdout=${PROCESS_LIST_FILE}
+    ${output}         Get File         ${PROCESS_LIST_FILE}    encoding=${ENCODING}
+    Should Contain    ${output}        ${CALCULATOR_NAME}
+
+Verify Addition Result
+    [Arguments]       ${calculation}   ${expected_result}
+    ${result}         Evaluate         ${calculation}
+    Should Be Equal As Numbers         ${result}    ${expected_result}
+    Log To Console                     ${\n}>>>${calculation}<<<
+    Log To Console                     ${\n}>>>${expected_result}<<<
+
+Test Add Wrong Function
+    [Arguments]       ${calculation}   ${expected_wrong_result}
+    ${result}         Evaluate         ${calculation}
+    Should Not Be Equal As Numbers     ${result}    ${expected_wrong_result}
+    Log To Console                     ${\n}>>>${calculation}<<<
+    Log To Console                     ${\n}>>>${${expected_wrong_result}}<<<
+
 
 
 
