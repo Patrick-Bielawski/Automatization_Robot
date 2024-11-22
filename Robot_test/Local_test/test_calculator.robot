@@ -1,6 +1,7 @@
 *** Settings ***
 Library    Process
 Library    OperatingSystem
+Library    BuiltIn
 
 *** Variables ***
 
@@ -12,36 +13,35 @@ ${ENCODING}                 cp850
 ${CALCULATOR_NAME}          CalculatorApp.exe
 
 # Hodnoty pro sčítání
-${ADD_TEST_1}               100 + 0
-${ADD_RESULT_1}             100
-${ADD_TEST_2}               10 + 8
-${ADD_RESULT_2}             18
-${ADD_TEST_3}               2.3 + 0.9
-${ADD_RESULT_3}             3.2
+@{ADD_TESTS}                100 + 0     10 + 8      2.3 + 0.9
+@{ADD_RESULTS}              100         18          3.2
 
 # Nesprávné výsledky
-${WRONG_RESULT_1}           5
-${WRONG_RESULT_2}           0
-${WRONG_RESULT_3}           2.9
+@{WRONG_RESULTS}            5           0           2.9
 
 *** Test Cases ***
 
-Test Start Calculator
-    [Documentation]     Tento test zkontroluje, zde je kalkulačka spuštěná.
-    Start Calculator
-    Verify Calculator Run
+Test Add Function with Loop
+    [Documentation]     Tento test zkontroluje funkci sčítání za pomocí cyklu.
+    ${length}           Evaluate         len(${ADD_TESTS})    # Získání délky seznamu
+    FOR    ${index}     IN RANGE    0    ${length}
+        ${test}         Set Variable     ${ADD_TESTS}[${index}]
+        ${expected}     Set Variable     ${ADD_RESULTS}[${index}]
+        Log                              ${\n}>>>Spuštěn test pro: ${test}<<<
+        ${result}       Evaluate         round(${test}, 2)    # Vyhodnocení matematického výrazu
+        Should Be Equal As Numbers       ${result}    ${expected}
+    END
 
-Test Add Function
-    [Documentation]     Tento test zkontroluje funkci sčítání
-    Verify Addition Result          ${ADD_TEST_1}   ${ADD_RESULT_1}
-    Verify Addition Result          ${ADD_TEST_2}   ${ADD_RESULT_2}
-    Verify Addition Result          ${ADD_TEST_3}   ${ADD_RESULT_3}
-
-Test Add Wrong Function
-    [Documentation]     Tento test zkontroluje, že výsledek není roven "result"
-    Test Add Wrong Function          ${ADD_TEST_1}   ${WRONG_RESULT_1}
-    Test Add Wrong Function          ${ADD_TEST_2}   ${WRONG_RESULT_2}
-    Test Add Wrong Function          ${ADD_TEST_3}   ${WRONG_RESULT_3}
+Test Add Wrong Function with Loop
+    [Documentation]     Tento test zkontroluje, že výsledek není roven "result" pomocí cyklu.
+    ${length}            Evaluate         len(${ADD_TESTS})    # Získání délky seznamu
+    FOR    ${index}    IN RANGE    0      ${length}
+        ${test}          Set Variable     ${ADD_TESTS}[${index}]
+        ${wrong_result}  Set Variable     ${WRONG_RESULTS}[${index}]
+        Log To Console                    ${\n}>>>Spuštěn test pro: ${test}<<<
+        ${result}        Evaluate         round(${test}, 2)    # Vyhodnocení matematického výrazu
+        Should Not Be Equal As Numbers    ${result}    ${wrong_result}
+    END
 
 *** Keywords ***
 
@@ -58,15 +58,11 @@ Verify Addition Result
     ${result}         Evaluate         ${calculation}
     Should Be Equal As Numbers         ${result}    ${expected_result}
     Log To Console                     ${\n}>>>${calculation}<<<
-    Log To Console                     ${\n}>>>${expected_result}<<<
+    Log To Console                     ${\n}>>>Očekávaný výsledek: ${expected_result}<<<
 
-Test Add Wrong Function
+Verify Wrong Addition Result
     [Arguments]       ${calculation}   ${expected_wrong_result}
     ${result}         Evaluate         ${calculation}
     Should Not Be Equal As Numbers     ${result}    ${expected_wrong_result}
     Log To Console                     ${\n}>>>${calculation}<<<
-    Log To Console                     ${\n}>>>${${expected_wrong_result}}<<<
-
-
-
-
+    Log To Console                     ${\n}>>>Neočekávaný výsledek: ${expected_wrong_result}<<<
